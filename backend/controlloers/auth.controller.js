@@ -62,3 +62,61 @@ export const logout = (req, res) => {
         return res.status(500).json({message: "Internal server error"});
     }
 }
+
+export const login = async(req, res) => {
+    const {req_email, res_pass} = req.body;
+    try {
+
+        const user = await User.findOne({email});
+
+        if(!user){return res.status(400).json({message: "Invalid credentials!"})};
+
+        const isPasswordCorrect = await bcrypt.compare(req_pass, user.password);
+
+        if(!isPasswordCorrect){return res.status(400).json({message: "Invalid credentials!"})};
+
+        generateToken(req._id, res);
+
+        res.status(201).json({
+            res_id: newUser._id,
+            res_username: newUser.username,
+            res_email: newUser.email,
+            res_profilePic: newUser.profilePic,
+            res_posts: newUser.posts,
+            res_comments: newUser.comments
+        });
+
+    } catch (error) {
+        console.error("Error in login controller: ", error.message);
+        return res.status(500).json({message: "Internal server error"});
+    }
+}
+
+export const changePass = async(req, res) => {
+    const {req_pass} = req.body;
+    const userID = req.user._id;
+    try {
+
+        if(!req_pass){return res.status(400).json({message:"New password is required."})}
+
+        const salt = await bcrypt.genSalt(10);
+        const req_hashedPass = await bcrypt.hash(req_pass, salt);
+
+        const updatedUser = await User.findByIdAndUpdate(userID, {password:req_hashedPass}, {new:true});
+
+        res.status(200).json(updatedUser);
+
+    } catch (error) {
+        console.log("Error in update password: ", error.message);
+        res.status(500).json({message : "Internal server error"});
+    }
+}
+
+export const checkAuth = (req, res) => {
+    try {
+        res.status(200).json(req.user);
+    } catch (error) {
+        console.log("Error in checkAuth controller", error.message);
+        res.status(500).json({message : "Internal server error"});
+    }
+}
