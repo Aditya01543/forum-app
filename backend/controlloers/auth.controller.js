@@ -64,10 +64,10 @@ export const logout = (req, res) => {
 }
 
 export const login = async(req, res) => {
-    const {req_email, res_pass} = req.body;
+    const {req_email, req_pass} = req.body;
     try {
 
-        const user = await User.findOne({email});
+        const user = await User.findOne({email:req_email});
 
         if(!user){return res.status(400).json({message: "Invalid credentials!"})};
 
@@ -75,15 +75,15 @@ export const login = async(req, res) => {
 
         if(!isPasswordCorrect){return res.status(400).json({message: "Invalid credentials!"})};
 
-        generateToken(req._id, res);
+        generateToken(user._id, res);
 
         res.status(201).json({
-            res_id: newUser._id,
-            res_username: newUser.username,
-            res_email: newUser.email,
-            res_profilePic: newUser.profilePic,
-            res_posts: newUser.posts,
-            res_comments: newUser.comments
+            res_id: user._id,
+            res_username: user.username,
+            res_email: user.email,
+            res_profilePic: user.profilePic,
+            res_posts: user.posts,
+            res_comments: user.comments
         });
 
     } catch (error) {
@@ -98,6 +98,10 @@ export const changePass = async(req, res) => {
     try {
 
         if(!req_pass){return res.status(400).json({message:"New password is required."})}
+
+        if(req_pass.length < 6){
+            return res.status(400).json({message: "Password should be atleast 6 characters long!"});
+        }
 
         const salt = await bcrypt.genSalt(10);
         const req_hashedPass = await bcrypt.hash(req_pass, salt);
