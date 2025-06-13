@@ -6,6 +6,10 @@ export const signUp = async(req, res) => {
     const {req_username, req_email, req_pass} = req.body;
     try {
 
+        let user = await User.findOne({email:req_email});
+        if(user){return res.status(400).json({message: "Email already exists!"});}
+
+
         if(!req_username || !req_email || !req_pass){
             return res.status(400).json({message: "All fields are required!"});
         }
@@ -13,10 +17,6 @@ export const signUp = async(req, res) => {
         if(req_pass.length < 6){
             return res.status(400).json({message: "Password should be atleast 6 characters long!"});
         }
-
-        let user = await User.findOne({req_email});
-
-        if(user){return res.status(400).json({message: "Email already exists!"});}
 
         user = await User.findOne({req_username});
 

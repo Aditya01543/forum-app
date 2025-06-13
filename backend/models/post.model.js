@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
 
     content: {
         type: String,
-        default: ""
+        default:""
     },
 
     comments: {
@@ -28,6 +28,16 @@ const postSchema = new mongoose.Schema({
     score: {
         type: Number,
         default: 0
+    },
+
+    edited:{
+        type: Boolean,
+        default: false
+    },
+
+    deleted:{
+        type: Boolean,
+        default: false
     }
 }, {timestamps:true});
 

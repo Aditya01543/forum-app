@@ -21,7 +21,17 @@ const commentSchema = new mongoose.Schema({
 
     score: {
         type: Number,
-        deafult: 0
+        default: 0
+    },
+
+    edited: {
+        type: Boolean,
+        default: false
+    },
+
+    deleted: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps:true});
 
