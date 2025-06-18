@@ -2,10 +2,20 @@ import React from 'react'
 
 import { ListTree, LogOut, Moon, Sun, User } from "lucide-react";
 import { Link } from 'react-router-dom';
-import { authManager } from '../managers/authManager';
+import { authManager } from '../managers/authManager.js';
+import { themeManager } from '../managers/themeManager.js';
 
 const Navbar = () => {
   const {currentUser, logout} = authManager();
+  const {theme, setTheme} = themeManager();
+
+  const darkTheme = () => {
+    setTheme("abyss");
+  }
+
+  const lightTheme = () => {
+    setTheme("silk");
+  }
 
   return (
     <div>
@@ -23,12 +33,12 @@ const Navbar = () => {
                 </div>
 
                 <div className='flex gap-2.5 items-center'>
-                    <button className='btn btn-ghost'>
-                        <Sun className='size-9'/>
+                    <button onClick={lightTheme} className={`btn btn-ghost ${theme === "silk" ? "hidden" : ""}`}>
+                      <Sun className='size-9'/>
                     </button>
-                    {/* <button className='btn btn-ghost'>
-                        <Moon className='size-9'/>
-                    </button> */}
+                    <button onClick={darkTheme} className={`btn btn-ghost ${theme === "abyss" ? "hidden" : ""}`}>
+                      <Moon className='size-9'/>
+                    </button>
 
                     {currentUser && (
                       <>

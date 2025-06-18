@@ -6,18 +6,20 @@ import SignupPage from './pages/SignupPage';
 import Navbar from './components/Navbar';
 
 import { Routes, Route, Navigate } from "react-router-dom";
-import { authManager } from './managers/authManager';
+import { authManager } from './managers/authManager.js';
+import { themeManager } from './managers/themeManager.js';
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const {currentUser, checkauth} = authManager();
+  const {theme} = themeManager();
 
   useEffect(() => {
     checkauth();
   }, [checkauth]);
 
   return (
-    <div>
+    <div data-theme={theme}>
       <Navbar/>
 
       <Routes>
