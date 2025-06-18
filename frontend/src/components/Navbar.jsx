@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { authManager } from '../managers/authManager';
 
 const Navbar = () => {
-  const {currentUser} = authManager();
+  const {currentUser, logout} = authManager();
 
   return (
     <div>
@@ -37,7 +37,7 @@ const Navbar = () => {
                           <span className='hidden sm:inline'>Profile</span>
                         </Link>
 
-                        <button className='flex gap-2 items-center'>
+                        <button className='flex gap-2 items-center' onClick={logout}>
                           <LogOut className='size-5'/>
                           <span className='hidden sm:inline'>Logout</span>
                         </button>

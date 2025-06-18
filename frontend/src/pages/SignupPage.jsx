@@ -11,27 +11,27 @@ const SignupPage = () => {
   const [showCPassword, setShowCPassword] = useState(false);
   
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+    req_username: "",
+    req_email: "",
+    req_pass: "",
     cPassword: ""
   });
 
   const validateForm = () => {
-    const trimmedName = formData.username.trim();
+    const trimmedName = formData.req_username.trim();
 
     if(!trimmedName) return toast.error("Username is required");
     if(trimmedName.includes(" ")) return toast.error("Username should nor include any space");
 
-    if(!formData.email.trim()) return toast.error("Email is required");
-    if(!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Invalid email format");
+    if(!formData.req_email.trim()) return toast.error("Email is required");
+    if(!/\S+@\S+\.\S+/.test(formData.req_email)) return toast.error("Invalid email format");
 
-    if(!formData.password) return toast.error("Password is required");
-    if(formData.password.length < 6) return toast.error("Password must be at least 6 characters");
-    if(formData.password.includes(" ")) return toast.error("Password should not have a space");
+    if(!formData.req_pass) return toast.error("Password is required");
+    if(formData.req_pass.length < 6) return toast.error("Password must be at least 6 characters");
+    if(formData.req_pass.includes(" ")) return toast.error("Password should not have a space");
 
     if(!formData.cPassword) return toast.error("Please re-enter the password");
-    if(formData.password !== formData.cPassword) return toast.error("Passwords don't match!!");
+    if(formData.req_pass !== formData.cPassword) return toast.error("Passwords don't match!!");
 
     return true;
   };
@@ -62,7 +62,7 @@ const SignupPage = () => {
             <p className="text-base-content/60">Sign in to your account</p>
           </div>
 
-          <form className='space-y-2 mx-5 mb-3' onSubmit={handleSubmit}>
+          <form className='space-y-2 mx-5' onSubmit={handleSubmit}>
 
             <div className='space-y-1'>
               <label className='label'>
@@ -76,8 +76,8 @@ const SignupPage = () => {
                   type="text"
                   className={`input input-bordered w-full pl-10`}
                   placeholder="user-69420"
-                  value={formData.username}
-                  onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                  value={formData.req_username}
+                  onChange={(e) => setFormData({ ...formData, req_username: e.target.value })}
                 />
               </div>
             </div>
@@ -94,8 +94,8 @@ const SignupPage = () => {
                   type="email"
                   className={`input input-bordered w-full pl-10`}
                   placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={formData.req_email}
+                  onChange={(e) => setFormData({ ...formData, req_email: e.target.value })}
                 />
               </div>
             </div>
@@ -112,8 +112,8 @@ const SignupPage = () => {
                   type={showPassword ? "text" : "password"}
                   className={`input input-bordered w-full pl-10`}
                   placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  value={formData.req_pass}
+                  onChange={(e) => setFormData({ ...formData, req_pass: e.target.value })}
                 />
                 <button
                   type="button"
@@ -158,7 +158,7 @@ const SignupPage = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full mt-5" disabled={isSigningUp}>
+            <button type="submit" className="btn btn-primary w-full mt-5 mb-2" disabled={isSigningUp}>
               {isSigningUp ? (
                 <>
                   <Loader2 className="size-5 z-40 animate-spin" />

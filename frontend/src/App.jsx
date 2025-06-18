@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ProfilePage from './pages/ProfilePage';
@@ -10,7 +10,11 @@ import { authManager } from './managers/authManager';
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const {currentUser} = authManager();
+  const {currentUser, checkauth} = authManager();
+
+  useEffect(() => {
+    checkauth();
+  }, [checkauth]);
 
   return (
     <div>

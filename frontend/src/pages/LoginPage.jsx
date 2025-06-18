@@ -9,8 +9,8 @@ const LoginPage = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    req_email: "",
+    req_pass: "",
   });
 
   const handleSubmit = async (e) => {
@@ -32,9 +32,9 @@ const LoginPage = () => {
             <p className="text-base-content/60">Sign in to your account</p>
           </div>
 
-          <form className='space-y-6 mx-5 mb-3' onSubmit={handleSubmit}>
+          <form className='space-y-2 mx-5' onSubmit={handleSubmit}>
 
-            <div className='space-y-2'>
+            <div className='space-y-1'>
               <label className='label'>
                 <span className='font-bold'>Email</span>
               </label>
@@ -46,15 +46,15 @@ const LoginPage = () => {
                   type="email"
                   className={`input input-bordered w-full pl-10`}
                   placeholder="you@example.com"
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  value={formData.req_email}
+                  onChange={(e) => setFormData({ ...formData, req_email: e.target.value })}
                 />
               </div>
             </div>
 
-            <div className="form-control">
+            <div className="form-control space-y-1">
               <label className="label">
-                <span className="label-text font-medium">Password</span>
+                <span className="label-text font-bold">Password</span>
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -64,8 +64,8 @@ const LoginPage = () => {
                   type={showPassword ? "text" : "password"}
                   className={`input input-bordered w-full pl-10`}
                   placeholder="••••••••"
-                  value={formData.password}
-                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  value={formData.req_pass}
+                  onChange={(e) => setFormData({ ...formData, req_pass: e.target.value })}
                 />
                 <button
                   type="button"
@@ -81,7 +81,7 @@ const LoginPage = () => {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary w-full" disabled={isLoggingIn}>
+            <button type="submit" className="btn btn-primary w-full mt-5 mb-2" disabled={isLoggingIn}>
               {isLoggingIn ? (
                 <>
                   <Loader2 className="size-5 z-40 animate-spin" />
