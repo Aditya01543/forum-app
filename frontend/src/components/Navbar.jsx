@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { ListTree, LogOut, Moon, Sun, User } from "lucide-react";
+import { ListTree, LogOut, Moon, Plus, Sun, User } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { authManager } from '../managers/authManager.js';
 import { themeManager } from '../managers/themeManager.js';
@@ -33,26 +33,27 @@ const Navbar = () => {
                 </div>
 
                 <div className='flex gap-2.5 items-center'>
-                    <button onClick={lightTheme} className={`btn btn-ghost ${theme === "silk" ? "hidden" : ""}`}>
-                      <Sun className='size-9'/>
-                    </button>
-                    <button onClick={darkTheme} className={`btn btn-ghost ${theme === "abyss" ? "hidden" : ""}`}>
-                      <Moon className='size-9'/>
-                    </button>
+                  <button onClick={lightTheme} className={`hover:cursor-pointer ${theme === "silk" ? "hidden" : ""}`}>
+                    <Sun className='size-9 mx-1'/>
+                  </button>
+                  <button onClick={darkTheme} className={`hover:cursor-pointer ${theme === "abyss" ? "hidden" : ""}`}>
+                    <Moon className='size-9 mx-1'/>
+                  </button>
+                  {currentUser && (
+                    <>
+                      <button className='hover:cursor-pointer flex gap-2 items-center'>
+                        <Plus className='size-9 mx-1'/>
+                      </button>
 
-                    {currentUser && (
-                      <>
-                        <Link to={"/profile"} className='btn bt-sm gap-2'>
-                          <User className='size-5'/>
-                          <span className='hidden sm:inline'>Profile</span>
-                        </Link>
+                      <Link to={"/profile"} className='hover:cursor-pointer gap-2'>
+                        <User className='size-9 mx-1'/>
+                      </Link>
 
-                        <button className='flex gap-2 items-center' onClick={logout}>
-                          <LogOut className='size-5'/>
-                          <span className='hidden sm:inline'>Logout</span>
-                        </button>
-                      </>
-                    )}
+                      <button className='hover:cursor-pointer flex gap-2 items-center' onClick={logout}>
+                        <LogOut className='size-9 mx-1'/>
+                      </button>
+                    </>
+                  )}
                 </div>
                 
             </div>
