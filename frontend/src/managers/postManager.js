@@ -38,11 +38,11 @@ export const postManager = create((set, get) => ({
         set({loadingPosts:true});
 
         try {
-            const res = await axiosInstance.get(`/post?page=${page}&limit=5`);
+            const res = await axiosInstance.get(`/post?page=${page}&limit=10`);
             const newPosts = res.data.posts;
 
             set({
-                posts:newPosts,
+                posts: [...posts, ...newPosts],
                 page: page+1,
                 hasMore:newPosts.length > 0
             });
