@@ -5,9 +5,11 @@ import Post from '../components/Post.jsx';
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
+import { authManager } from '../managers/authManager.js';
 
 const HomePage = () => {
   const { isCreatingPost, posts, getPosts, hasMore, loadingPosts } = postManager();
+  const { getName } = authManager();
 
   const observer = useRef();
 
@@ -47,7 +49,7 @@ const HomePage = () => {
                 ref={isLast ? lastPostRef : null}
                 key={post._id}
               >
-                <Post title={post.title} />
+                <Post title={post.title} creatorId={post.oCreator} />
               </div>
             );
           })}

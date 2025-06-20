@@ -131,7 +131,7 @@ export const getPosts = async (req, res) => {
     const posts = await Post.find()
       .sort({ createdAt: -1 }) // newest first
       .skip(skip)
-      .limit(limit).select("_id title");
+      .limit(limit).select("_id title oCreator");
 
     res.status(200).json({
       posts,

@@ -124,3 +124,19 @@ export const checkAuth = (req, res) => {
         res.status(500).json({message : "Internal server error"});
     }
 }
+
+export const getName = async(req, res) => {
+
+    const {id:userID} = req.params;
+
+    try {
+        const user = await User.findOne({_id:userID});
+        if(!user) return res.status(400).json({username:"User not found"});
+
+        res.status(200).json({username:user.username});
+    } catch (error) {
+        console.log("Error in getName controller", error.message);
+        res.status(500).json({message : "Internal server error"});
+    }
+    
+}

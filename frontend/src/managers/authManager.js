@@ -53,5 +53,16 @@ export const authManager = create((set, get) => ({
         } catch (error) {
             toast.error(error.respose.data.message);
         }
+    },
+
+    getName: async (id) => {
+      try {
+        const res = await axiosInstance.get(`auth/name/${id}`);
+        return res.data.username;
+      } catch (err) {
+        console.error("Error fetching username:", err);
+        return null;
+      }
     }
+
 }));
