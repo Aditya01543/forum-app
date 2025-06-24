@@ -9,6 +9,7 @@ export const postManager = create((set, get) => ({
     hasMore:true,
     page:1,
     loadingPosts:false,
+    loadingPost:false,
 
     closeCP: () => {
         set({isCreatingPost:false});
@@ -50,6 +51,20 @@ export const postManager = create((set, get) => ({
             toast.error("Failed to load posts");
         }finally{
             set({loadingPosts:false});
+        }
+    },
+
+    viewPost: async (id) => {
+        set({ loadingPost: true });     
+        try {
+          const res = await axiosInstance.get(`/post/${id}`);
+          return res.data; // contains the post object
+        } catch (error) {
+          toast.error("Failed to load post");
+          console.error("viewPost error:", error);
+          return null;
+        } finally {
+          set({ loadingPost: false });
         }
     }
 }));

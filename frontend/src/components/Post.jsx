@@ -1,6 +1,7 @@
 import { ArrowBigDown, ArrowBigUp, MessageCircle } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { authManager } from '../managers/authManager';
+import { Link } from 'react-router-dom';
 
 const Post = ({ title, id, creatorId }) => {
   const [creatorName, setCreatorName] = useState("Loading...");
@@ -31,7 +32,9 @@ const Post = ({ title, id, creatorId }) => {
           <div className='flex w-full space-x-3'>
             <ArrowBigUp className='text-neutral size-7 hover:cursor-pointer hover:text-error' />
             <ArrowBigDown className='text-neutral size-7 hover:cursor-pointer hover:text-info' />
-            <MessageCircle className='text-neutral size-7 hover:cursor-pointer hover:text-success' />
+            <Link to={`/post/${id}`}>
+              <MessageCircle className='text-neutral size-7 hover:cursor-pointer hover:text-success' />
+            </Link>
           </div>
         </div>
       </div>

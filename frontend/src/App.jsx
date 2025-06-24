@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
+import PostPage from './pages/PostPage.jsx';
 import ProfilePage from './pages/ProfilePage';
 import SignupPage from './pages/SignupPage';
 import Navbar from './components/Navbar';
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/signup" element={!currentUser ? <SignupPage/> : <Navigate to="/" />} />
         <Route path="/login" element={!currentUser ? <LoginPage/> : <Navigate to="/" />} />
         <Route path="/profile" element={currentUser ? <ProfilePage/> : <Navigate to="/login" />} />
+        <Route path="/post/:id" element={currentUser ? <PostPage /> : <Navigate to="/login" />} />
       </Routes>
 
       <Toaster/>

@@ -15,9 +15,9 @@ const CreatePostBox = () => {
       setPostData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const submit = () => {
+    const submit = async() => {
         if(!postData.req_title) return toast.error("Title is required");
-        createPost(postData);
+        await createPost(postData);
         discard();
     };
 

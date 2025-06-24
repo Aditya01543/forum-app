@@ -101,17 +101,22 @@ export const viewPost = async(req, res) => {
 
     try {
 
-        let post = await Post.findById(postID);
+        let post = await Post.findById(postID)
+        .populate({
+            path: 'comments',
+            model: 'Comment', // make sure this matches your model name
+        });
         
         if(!post) return res.status(400).json({message:"Post not found."});
 
         res.status(200).json({
             res_id:post._id,
-            res_oc: post.deleted ? "[delted]" : post.oCreator,
-            res_title: post.deleted ? "[delted]" : post.title,
-            res_content: post.deleted ? "[delted]" : post.content,
+            res_oc:post.oCreator,
+            res_title:post.title,
+            res_content:post.content,
             res_comments:post.comments,
-            res_edited:post.edited
+            res_edited:post.edited,
+            res_deleted:post.deleted
         });
         
     } catch (error) {

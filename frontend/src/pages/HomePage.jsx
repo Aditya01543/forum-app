@@ -37,7 +37,7 @@ const HomePage = () => {
     <div className='flex flex-col items-center w-full min-h-screen pt-20 bg-base-300'>
       {isCreatingPost && <CreatePostBox />}
 
-      <div className='w-full max-w-4xl bg-base-200 rounded-xl p-4'>
+      <div className='w-full max-w-5xl bg-base-200 rounded-xl p-4'>
         <h1 className='text-3xl mb-4 text-center'>Recent Posts</h1>
 
         {/* Scrollable area */}
@@ -49,7 +49,7 @@ const HomePage = () => {
                 ref={isLast ? lastPostRef : null}
                 key={post._id}
               >
-                <Post title={post.title} creatorId={post.oCreator} />
+                <Post title={post.title} creatorId={post.oCreator} id={post._id}/>
               </div>
             );
           })}
