@@ -12,12 +12,20 @@ import { themeManager } from './managers/themeManager.js';
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
-  const {currentUser, checkauth} = authManager();
+  const {currentUser, checkauth, isCheckingAuth} = authManager();
   const {theme} = themeManager();
 
   useEffect(() => {
     checkauth();
   }, [checkauth]);
+
+  if (isCheckingAuth) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <p>Checking authentication...</p>
+      </div>
+    );
+  }
 
   return (
     <div data-theme={theme}>

@@ -41,7 +41,8 @@ export const signUp = async(req, res) => {
                 res_email: newUser.email,
                 res_profilePic: newUser.profilePic,
                 res_posts: newUser.posts,
-                res_comments: newUser.comments
+                res_comments: newUser.comments,
+                createdAt: user.createdAt
             });
         }else{
             return res.status(400).json({message: "Invalid user data"});
@@ -83,7 +84,8 @@ export const login = async(req, res) => {
             res_email: user.email,
             res_profilePic: user.profilePic,
             res_posts: user.posts,
-            res_comments: user.comments
+            res_comments: user.comments,
+            createdAt: user.createdAt
         });
 
     } catch (error) {
@@ -118,7 +120,15 @@ export const changePass = async(req, res) => {
 
 export const checkAuth = (req, res) => {
     try {
-        res.status(200).json(req.user);
+        res.status(200).json({
+            res_id: req.user._id,
+            res_username: req.user.username,
+            res_email: req.user.email,
+            res_profilePic: req.user.profilePic,
+            res_posts: req.user.posts,
+            res_comments: req.user.comments,
+            createdAt: req.user.createdAt
+        });
     } catch (error) {
         console.log("Error in checkAuth controller", error.message);
         res.status(500).json({message : "Internal server error"});

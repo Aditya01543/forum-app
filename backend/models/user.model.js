@@ -32,6 +32,20 @@ const userSchema = new mongoose.Schema({
         }]
     },
 
+    upvoted: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            default: []
+        }]
+    },
+
+    downvoted: {
+        type: [{
+            type: mongoose.Schema.Types.ObjectId,
+            default: []
+        }]
+    },
+
     comments: {
         type: [{
             type: mongoose.Schema.Types.ObjectId,

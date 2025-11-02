@@ -34,7 +34,7 @@ const HomePage = () => {
   );
 
   return (
-    <div className='flex flex-col items-center w-full min-h-screen pt-20 bg-base-300'>
+    <div className='flex flex-col items-center w-full min-h-screen pt-20 bg-base-100'>
       {isCreatingPost && <CreatePostBox />}
 
       <div className='w-full max-w-5xl bg-base-200 rounded-xl p-4'>
