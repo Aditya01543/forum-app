@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 
 export const postManager = create((set, get) => ({
     isCreatingPost:false,
+    isEditingPost:false,
     uploadingPost:false,
     posts:[],
     hasMore:true,
@@ -13,10 +14,12 @@ export const postManager = create((set, get) => ({
 
     closeCP: () => {
         set({isCreatingPost:false});
+        set({isEditingPost:false});
     },
     
     openCP: () => {
         set({isCreatingPost:true});
+        set({isEditingPost:true});
     },
 
     createPost: async(data) => {
@@ -24,6 +27,18 @@ export const postManager = create((set, get) => ({
         try {
             await axiosInstance.post("/post", data);
             toast.success("Post created");
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }finally{
+            set({uploadingPost:false});
+        }
+    },
+
+    editPost: async(data, id) => {
+        set({uploadingPost:true});
+        try {
+            await axiosInstance.put(`/post/${id}`, data);
+            toast.success("Post edited!");
         } catch (error) {
             toast.error(error.response.data.message);
         }finally{
@@ -58,6 +73,7 @@ export const postManager = create((set, get) => ({
         set({ loadingPost: true });     
         try {
           const res = await axiosInstance.get(`/post/${id}`);
+        //   console.log(res.data);
           return res.data; // contains the post object
         } catch (error) {
           toast.error("Failed to load post");

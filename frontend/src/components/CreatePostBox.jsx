@@ -1,14 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Loader, X } from 'lucide-react';
 import { postManager } from '../managers/postManager.js';
 import toast from 'react-hot-toast';
 
-const CreatePostBox = () => {
-    const {closeCP, createPost, uploadingPost} = postManager();
+const CreatePostBox = ({title, button, id, postTitle, postContent}) => {
+    const {closeCP, createPost, uploadingPost, editPost} = postManager();
     const [postData, setPostData] = useState({
-        req_title:"",
-        req_content:""
+        req_title: title === "Edit" ? postTitle : "",
+        req_content: title === "Edit" ? postContent : ""
     });
+
+    useEffect(() => {
+      if (title === "Edit") {
+        setPostData({
+          req_title: postTitle || "",
+          req_content: postContent || ""
+        });
+      }
+    }, [title, postTitle, postContent]);
 
     const handleChange = (e) => {
       const { name, value } = e.target;
@@ -17,7 +26,12 @@ const CreatePostBox = () => {
 
     const submit = async() => {
         if(!postData.req_title) return toast.error("Title is required");
-        await createPost(postData);
+        if(button === "Post"){
+          await createPost(postData);
+        }
+        if(button === "Edit"){
+          await editPost(postData, id);
+        }
         discard();
     };
 
@@ -34,7 +48,7 @@ const CreatePostBox = () => {
               <X className="size-6" />
             </button>
 
-            <h2 className="text-lg font-semibold mb-4 text-center">Create a Post</h2>
+            <h2 className="text-lg font-semibold mb-4 text-center">{title}</h2>
 
             <input
               type="text"
@@ -60,7 +74,7 @@ const CreatePostBox = () => {
               onClick={submit}
               className="hover:cursor-pointer text-base-300 w-full bg-primary py-2 rounded-l-full rounded-r-full hover:bg-primary/60"
             >
-              {uploadingPost ? <Loader className='size-5 animate-spin'/> : "Post"}
+              {uploadingPost ? <Loader className='size-5 animate-spin'/> : button}
             </button>
 
           </div>
