@@ -42,7 +42,7 @@ export const signUp = async(req, res) => {
                 res_profilePic: newUser.profilePic,
                 res_posts: newUser.posts,
                 res_comments: newUser.comments,
-                createdAt: user.createdAt
+                createdAt: newUser.createdAt
             });
         }else{
             return res.status(400).json({message: "Invalid user data"});
